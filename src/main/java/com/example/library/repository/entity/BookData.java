@@ -1,15 +1,19 @@
 package com.example.library.repository.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+
+import java.util.List;
 
 @Entity
 @Table(name = "book")
-public class Book {
+public class BookData {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -19,10 +23,13 @@ public class Book {
     @Column(unique = true)
     private String isbn;
 
-    public Book() {
+    @OneToMany(mappedBy = "book", cascade = CascadeType.REMOVE)
+    private List<BorrowingRecordData> borrowingRecords;
+
+    public BookData() {
     }
 
-    public Book(Long id, String title, String author, int publicationYear, String isbn) {
+    public BookData(Long id, String title, String author, int publicationYear, String isbn) {
         this.id = id;
         this.title = title;
         this.author = author;
@@ -48,6 +55,10 @@ public class Book {
 
     public String getIsbn() {
         return isbn;
+    }
+
+    public List<BorrowingRecordData> getBorrowingRecords() {
+        return borrowingRecords;
     }
 
     public static Builder builder() {
@@ -93,8 +104,8 @@ public class Book {
             return this;
         }
 
-        public Book build() {
-            return new Book(id, title, author, publicationYear, isbn);
+        public BookData build() {
+            return new BookData(id, title, author, publicationYear, isbn);
         }
     }
 }

@@ -12,25 +12,25 @@ import java.time.OffsetDateTime;
 
 @Entity
 @Table(name = "borrowing_record")
-public class BorrowingRecord {
+public class BorrowingRecordData {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
     @JoinColumn(name = "book_id")
-    private Book book;
+    private BookData book;
     @ManyToOne
     @JoinColumn(name = "patron_id")
-    private Patron patron;
+    private PatronData patron;
 
     private OffsetDateTime borrowingDate;
     private OffsetDateTime returnDate;
 
-    public BorrowingRecord() {
+    public BorrowingRecordData() {
     }
 
-    public BorrowingRecord(Long id, Book book, Patron patron, OffsetDateTime borrowingDate, OffsetDateTime returnDate) {
+    public BorrowingRecordData(Long id, BookData book, PatronData patron, OffsetDateTime borrowingDate, OffsetDateTime returnDate) {
         this.id = id;
         this.book = book;
         this.patron = patron;
@@ -46,11 +46,11 @@ public class BorrowingRecord {
         return id;
     }
 
-    public Book getBook() {
+    public BookData getBook() {
         return book;
     }
 
-    public Patron getPatron() {
+    public PatronData getPatron() {
         return patron;
     }
 
@@ -65,8 +65,8 @@ public class BorrowingRecord {
 
     public static final class Builder {
         private Long id;
-        private Book book;
-        private Patron patron;
+        private BookData book;
+        private PatronData patron;
         private OffsetDateTime borrowingDate;
         private OffsetDateTime returnDate;
 
@@ -82,12 +82,12 @@ public class BorrowingRecord {
             return this;
         }
 
-        public Builder book(Book val) {
+        public Builder book(BookData val) {
             book = val;
             return this;
         }
 
-        public Builder patron(Patron val) {
+        public Builder patron(PatronData val) {
             patron = val;
             return this;
         }
@@ -102,8 +102,8 @@ public class BorrowingRecord {
             return this;
         }
 
-        public BorrowingRecord build() {
-            return new BorrowingRecord(id, book, patron, borrowingDate, returnDate);
+        public BorrowingRecordData build() {
+            return new BorrowingRecordData(id, book, patron, borrowingDate, returnDate);
         }
     }
 }

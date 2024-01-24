@@ -1,15 +1,19 @@
 package com.example.library.repository.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+
+import java.util.List;
 
 @Entity
 @Table(name = "patron")
-public class Patron {
+public class PatronData {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -17,10 +21,13 @@ public class Patron {
     @Column(unique = true)
     private String contactInformation;
 
-    public Patron() {
+    @OneToMany(mappedBy = "patron", cascade = CascadeType.REMOVE)
+    private List<BorrowingRecordData> borrowingRecords;
+
+    public PatronData() {
     }
 
-    public Patron(Long id, String name, String contactInformation) {
+    public PatronData(Long id, String name, String contactInformation) {
         this.id = id;
         this.name = name;
         this.contactInformation = contactInformation;
@@ -42,6 +49,9 @@ public class Patron {
         return contactInformation;
     }
 
+    public List<BorrowingRecordData> getBorrowingRecords() {
+        return borrowingRecords;
+    }
 
     public static final class Builder {
         private Long id;
@@ -70,8 +80,8 @@ public class Patron {
             return this;
         }
 
-        public Patron build() {
-            return new Patron(id, name, contactInformation);
+        public PatronData build() {
+            return new PatronData(id, name, contactInformation);
         }
     }
 }
