@@ -1,9 +1,9 @@
 -- Insert sample data into the Book table
 INSERT INTO book (title, author, publication_year, isbn)
-VALUES ('The Great Gatsby', 'F. Scott Fitzgerald', 1925, '978-3-16-148410-0'),
-       ('To Kill a Mockingbird', 'Harper Lee', 1960, '978-0-06-112008-4'),
-       ('1984', 'George Orwell', 1949, '978-0-452-28423-4'),
-       ('Pride and Prejudice', 'Jane Austen', 1813, '978-0-19-953556-9');
+VALUES ('The Great Gatsby', 'F. Scott Fitzgerald', 1925, '1-061-96436-1'),
+       ('To Kill a Mockingbird', 'Harper Lee', 1960, '1-061-96436-2'),
+       ('1984', 'George Orwell', 1949, '1-061-96436-3'),
+       ('Pride and Prejudice', 'Jane Austen', 1813, '1-061-96436-4');
 
 -- Insert sample data into the Patron table
 INSERT INTO patron (name, contact_information)
