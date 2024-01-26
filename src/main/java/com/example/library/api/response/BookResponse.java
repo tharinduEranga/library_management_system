@@ -14,7 +14,9 @@ public record BookResponse(
         @Nonnull
         Integer publicationYear,
         @Nonnull
-        String isbn
+        String isbn,
+        @Nonnull
+        Boolean isAvailable
 ) {
     public BookResponse {
         Objects.requireNonNull(id, "book id is required!");
@@ -22,6 +24,7 @@ public record BookResponse(
         Objects.requireNonNull(author, "book author is required!");
         Objects.requireNonNull(publicationYear, "book publicationYear is required!");
         Objects.requireNonNull(isbn, "book isbn is required!");
+        Objects.requireNonNull(isAvailable, "book availability is required!");
     }
 
     public static BookResponse.Builder builder() {
@@ -34,6 +37,7 @@ public record BookResponse(
         private @Nonnull String author;
         private @Nonnull Integer publicationYear;
         private @Nonnull String isbn;
+        private @Nonnull Boolean isAvailable;
 
         private Builder() {
         }
@@ -67,8 +71,13 @@ public record BookResponse(
             return this;
         }
 
+        public Builder isAvailable(@Nonnull Boolean val) {
+            isAvailable = val;
+            return this;
+        }
+
         public BookResponse build() {
-            return new BookResponse(id, title, author, publicationYear, isbn);
+            return new BookResponse(id, title, author, publicationYear, isbn, isAvailable);
         }
     }
 }

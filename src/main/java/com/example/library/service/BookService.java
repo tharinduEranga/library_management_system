@@ -9,6 +9,7 @@ import com.example.library.repository.dao.BookRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class BookService {
@@ -42,12 +43,14 @@ public class BookService {
         bookRepository.deleteById(bookId.value());
     }
 
+    @Transactional(readOnly = true)
     public Book get(final BookId bookId) {
         return bookRepository.findById(bookId.value())
                 .map(BookMapper::toBook)
                 .orElseThrow(() -> new NotFoundException("Book doesn't exist for id: " + bookId.value()));
     }
 
+    @Transactional(readOnly = true)
     public Page<Book> getAll(Pageable pageable) {
         return bookRepository.findAll(pageable)
                 .map(BookMapper::toBook);

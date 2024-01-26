@@ -9,6 +9,7 @@ import com.example.library.repository.dao.PatronRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class PatronService {
@@ -43,12 +44,14 @@ public class PatronService {
         patronRepository.deleteById(patronId.value());
     }
 
+    @Transactional(readOnly = true)
     public Patron get(final PatronId patronId) {
         return patronRepository.findById(patronId.value())
                 .map(PatronMapper::toPatron)
                 .orElseThrow(() -> new NotFoundException("Patron doesn't exist for id: " + patronId.value()));
     }
 
+    @Transactional(readOnly = true)
     public Page<Patron> getAll(Pageable pageable) {
         return patronRepository.findAll(pageable)
                 .map(PatronMapper::toPatron);

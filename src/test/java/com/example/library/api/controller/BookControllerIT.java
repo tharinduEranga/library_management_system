@@ -46,7 +46,8 @@ class BookControllerIT {
                                 "title": "The Catcher in the Rye",
                                 "author": "J.D. Salinger",
                                 "publicationYear": 1951,
-                                "isbn": "0-061-96436-9"
+                                "isbn": "0-061-96436-9",
+                                "isAvailable": true
                             }
                         """));
     }
@@ -60,6 +61,7 @@ class BookControllerIT {
                         .title("Test")
                         .publicationYear(1990)
                         .author("Test")
+                        .isAvailable(Boolean.TRUE)
                 .build());
         mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/book")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -95,7 +97,8 @@ class BookControllerIT {
                                     "title": "Hollow Earth",
                                     "author": "J.K. Rowling",
                                     "publicationYear": 2000,
-                                    "isbn": "1-061-96436-6"
+                                    "isbn": "1-061-96436-6",
+                                    "isAvailable": false
                                 }
                                 """)
                 )
@@ -106,7 +109,8 @@ class BookControllerIT {
                                 "title": "Hollow Earth",
                                 "author": "J.K. Rowling",
                                 "publicationYear": 2000,
-                                "isbn": "1-061-96436-6"
+                                "isbn": "1-061-96436-6",
+                                "isAvailable": false
                             }
                         """));
     }
@@ -120,6 +124,7 @@ class BookControllerIT {
                 .title("Test")
                 .publicationYear(1990)
                 .author("Test")
+                .isAvailable(Boolean.TRUE)
                 .build());
         mockMvc.perform(MockMvcRequestBuilders.put("/api/v1/book/1")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -128,7 +133,8 @@ class BookControllerIT {
                                     "title": "The Catcher in the Rye",
                                     "author": "J.D. Salinger",
                                     "publicationYear": 1951,
-                                    "isbn": "1-061-96436-8"
+                                    "isbn": "1-061-96436-8",
+                                    "isAvailable": true
                                 }
                                 """)
                 )
@@ -186,7 +192,8 @@ class BookControllerIT {
                                 "title": "To Kill a Mockingbird",
                                 "author": "Harper Lee",
                                 "publicationYear": 1960,
-                                "isbn": "1-061-96436-2"
+                                "isbn": "1-061-96436-2",
+                                "isAvailable": true
                             }
                         """));
     }
@@ -225,14 +232,16 @@ class BookControllerIT {
                                          "title": "The Great Gatsby",
                                          "author": "F. Scott Fitzgerald",
                                          "publicationYear": 1925,
-                                         "isbn": "1-061-96436-1"
+                                         "isbn": "1-061-96436-1",
+                                         "isAvailable": true
                                      },
                                      {
                                          "id": 2,
                                          "title": "To Kill a Mockingbird",
                                          "author": "Harper Lee",
                                          "publicationYear": 1960,
-                                         "isbn": "1-061-96436-2"
+                                         "isbn": "1-061-96436-2",
+                                         "isAvailable": true
                                      }
                                  ],
                                  "pageable": {

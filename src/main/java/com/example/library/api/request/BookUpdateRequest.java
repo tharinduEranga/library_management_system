@@ -12,6 +12,8 @@ public record BookUpdateRequest(
         @NotNull(message = "Publication year cannot be null")
         Integer publicationYear,
         @Pattern(regexp = "\\d{1}-\\d{3}-\\d{5}-\\d{1}", message = "ISBN must be in the format x-xxx-xxxxx-x")
-        String isbn
+        String isbn,
+        @NotNull(message = "Availability cannot be null")
+        Boolean isAvailable
 ) {
 }

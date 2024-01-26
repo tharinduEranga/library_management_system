@@ -21,6 +21,7 @@ public class BookMapper {
                 .title(book.title())
                 .isbn(book.isbn().value())
                 .publicationYear(book.publicationYear())
+                .isAvailable(book.isAvailable())
                 .build();
     }
 
@@ -31,6 +32,7 @@ public class BookMapper {
                 .title(bookData.getTitle())
                 .isbn(Isbn.of(bookData.getIsbn()))
                 .publicationYear(bookData.getPublicationYear())
+                .isAvailable(bookData.isAvailable())
                 .build();
     }
 
@@ -41,6 +43,7 @@ public class BookMapper {
                 .title(bookRequest.title())
                 .isbn(Isbn.of(bookRequest.isbn()))
                 .publicationYear(bookRequest.publicationYear())
+                .isAvailable(Boolean.TRUE)
                 .build();
     }
 
@@ -51,6 +54,7 @@ public class BookMapper {
                 .title(bookRequest.title())
                 .isbn(Isbn.of(bookRequest.isbn()))
                 .publicationYear(bookRequest.publicationYear())
+                .isAvailable(bookRequest.isAvailable())
                 .build();
     }
 
@@ -65,6 +69,7 @@ public class BookMapper {
                 .title(book.title())
                 .isbn(book.isbn().value())
                 .publicationYear(book.publicationYear())
+                .isAvailable(book.isAvailable())
                 .build();
     }
 }
