@@ -90,7 +90,15 @@ class BookControllerIT {
     @Test
     @DisplayName("GIVEN valid book data WHEN call update book api THEN book is updated successfully")
     void updateBookSuccess() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.put("/api/v1/book/1")
+        final var addedBook = bookRepository.save(BookData.builder()
+                .id(0L)
+                .isbn("1-061-92236-8")
+                .title("Test update")
+                .publicationYear(1995)
+                .author("Test update")
+                .isAvailable(Boolean.TRUE)
+                .build());
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/v1/book/%s".formatted(addedBook.getId()))
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {
@@ -105,14 +113,14 @@ class BookControllerIT {
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(content().json("""
                             {
-                                "id": 1,
+                                "id": %s,
                                 "title": "Hollow Earth",
                                 "author": "J.K. Rowling",
                                 "publicationYear": 2000,
                                 "isbn": "1-061-96436-6",
                                 "isAvailable": false
                             }
-                        """));
+                        """.formatted(addedBook.getId())));
     }
 
     @Test
