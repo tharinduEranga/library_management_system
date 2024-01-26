@@ -62,6 +62,9 @@ public class BorrowingRecordData {
         return returnDate;
     }
 
+    public void setReturnDate(OffsetDateTime returnDate) {
+        this.returnDate = returnDate;
+    }
 
     public static final class Builder {
         private Long id;
