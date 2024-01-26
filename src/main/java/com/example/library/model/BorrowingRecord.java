@@ -1,6 +1,8 @@
 package com.example.library.model;
 
+import com.example.library.model.value.BookId;
 import com.example.library.model.value.DateValue;
+import com.example.library.model.value.PatronId;
 import jakarta.annotation.Nonnull;
 
 import java.util.Objects;
@@ -9,9 +11,9 @@ public record BorrowingRecord(
         @Nonnull
         Long id,
         @Nonnull
-        Book book,
+        BookId bookId,
         @Nonnull
-        Patron patron,
+        PatronId patronId,
         @Nonnull
         DateValue borrowingDate,
         @Nonnull
@@ -19,8 +21,8 @@ public record BorrowingRecord(
 ) {
     public BorrowingRecord {
         Objects.requireNonNull(id, "borrowing record id is required!");
-        Objects.requireNonNull(book, "borrowing record book is required!");
-        Objects.requireNonNull(patron, "borrowing record patron is required!");
+        Objects.requireNonNull(bookId, "borrowing record bookId id is required!");
+        Objects.requireNonNull(patronId, "borrowing record patronId id is required!");
         Objects.requireNonNull(borrowingDate, "borrowing record borrowing date is required!");
         Objects.requireNonNull(returnDate, "borrowing record return date is required!");
     }
@@ -31,8 +33,8 @@ public record BorrowingRecord(
 
     public static final class Builder {
         private @Nonnull Long id;
-        private @Nonnull Book book;
-        private @Nonnull Patron patron;
+        private @Nonnull BookId bookId;
+        private @Nonnull PatronId patronId;
         private @Nonnull DateValue borrowingDate;
         private @Nonnull DateValue returnDate;
 
@@ -48,13 +50,13 @@ public record BorrowingRecord(
             return this;
         }
 
-        public Builder book(@Nonnull Book val) {
-            book = val;
+        public Builder bookId(@Nonnull BookId val) {
+            bookId = val;
             return this;
         }
 
-        public Builder patron(@Nonnull Patron val) {
-            patron = val;
+        public Builder patronId(@Nonnull PatronId val) {
+            patronId = val;
             return this;
         }
 
@@ -69,7 +71,7 @@ public record BorrowingRecord(
         }
 
         public BorrowingRecord build() {
-            return new BorrowingRecord(id, book, patron, borrowingDate, returnDate);
+            return new BorrowingRecord(id, bookId, patronId, borrowingDate, returnDate);
         }
     }
 }

@@ -49,9 +49,6 @@ public class PatronData {
         return contactInformation;
     }
 
-    public List<BorrowingRecordData> getBorrowingRecords() {
-        return borrowingRecords;
-    }
 
     public static final class Builder {
         private Long id;
