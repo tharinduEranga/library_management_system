@@ -3,6 +3,7 @@ package com.example.library.api.controller;
 import com.example.library.api.request.BookAddRequest;
 import com.example.library.api.request.BookUpdateRequest;
 import com.example.library.api.response.BookResponse;
+import com.example.library.logging.Log;
 import com.example.library.mapper.BookMapper;
 import com.example.library.model.value.BookId;
 import com.example.library.service.BookService;
@@ -31,6 +32,7 @@ public class BookController {
         this.bookService = bookService;
     }
 
+    @Log
     @PostMapping
     public ResponseEntity<BookResponse> addBook(@RequestBody @Valid BookAddRequest bookRequest) {
         final var book = BookMapper.toBook(bookRequest);
@@ -39,6 +41,7 @@ public class BookController {
         return ResponseEntity.created(URI.create("/api/v1/book")).body(bookResponse);
     }
 
+    @Log
     @PutMapping(path = "/{id}")
     public ResponseEntity<BookResponse> updateBook(@PathVariable Long id,
                                                    @RequestBody @Valid BookUpdateRequest bookRequest) {
@@ -48,12 +51,14 @@ public class BookController {
         return ResponseEntity.ok(bookResponse);
     }
 
+    @Log
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteBook(@PathVariable Long id) {
         bookService.delete(BookId.of(id));
         return ResponseEntity.ok().build();
     }
 
+    @Log
     @GetMapping("/{id}")
     public ResponseEntity<BookResponse> getBook(@PathVariable Long id) {
         final var book = bookService.get(new BookId(id));
@@ -61,6 +66,7 @@ public class BookController {
         return ResponseEntity.ok(bookResponse);
     }
 
+    @Log
     @GetMapping
     public ResponseEntity<Page<BookResponse>> getAllBooks(Pageable pageable) {
         final var books = bookService.getAll(pageable);

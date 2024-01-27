@@ -2,6 +2,7 @@ package com.example.library.api.controller;
 
 import com.example.library.api.request.BorrowingRequest;
 import com.example.library.api.request.BorrowingResponse;
+import com.example.library.logging.Log;
 import com.example.library.mapper.BorrowingMapper;
 import com.example.library.service.BorrowingService;
 import jakarta.validation.Valid;
@@ -23,8 +24,9 @@ public class BorrowingController {
         this.borrowingService = borrowingService;
     }
 
+    @Log
     @PostMapping
-    public ResponseEntity<BorrowingResponse> addBook(@RequestBody @Valid BorrowingRequest borrowingRequest) {
+    public ResponseEntity<BorrowingResponse> borrow(@RequestBody @Valid BorrowingRequest borrowingRequest) {
         final var borrowingRecord = BorrowingMapper.toBorrowingRecord(borrowingRequest);
         final var borrowedRecord = borrowingService.borrow(borrowingRecord);
         final var borrowingResponse = BorrowingMapper.toBorrowingResponse(borrowedRecord);

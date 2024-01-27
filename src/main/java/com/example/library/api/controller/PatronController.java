@@ -3,6 +3,7 @@ package com.example.library.api.controller;
 import com.example.library.api.request.PatronAddRequest;
 import com.example.library.api.request.PatronUpdateRequest;
 import com.example.library.api.response.PatronResponse;
+import com.example.library.logging.Log;
 import com.example.library.mapper.PatronMapper;
 import com.example.library.model.value.PatronId;
 import com.example.library.service.PatronService;
@@ -31,6 +32,7 @@ public class PatronController {
         this.patronService = patronService;
     }
 
+    @Log
     @PostMapping
     public ResponseEntity<PatronResponse> addPatron(@RequestBody @Valid PatronAddRequest patronRequest) {
         final var patron = PatronMapper.toPatron(patronRequest);
@@ -39,6 +41,7 @@ public class PatronController {
         return ResponseEntity.created(URI.create("/api/v1/patron")).body(patronResponse);
     }
 
+    @Log
     @PutMapping(path = "/{id}")
     public ResponseEntity<PatronResponse> updatePatron(@PathVariable Long id,
                                                        @RequestBody @Valid PatronUpdateRequest patronRequest) {
@@ -48,12 +51,14 @@ public class PatronController {
         return ResponseEntity.ok(patronResponse);
     }
 
+    @Log
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePatron(@PathVariable Long id) {
         patronService.delete(PatronId.of(id));
         return ResponseEntity.ok().build();
     }
 
+    @Log
     @GetMapping("/{id}")
     public ResponseEntity<PatronResponse> getPatron(@PathVariable Long id) {
         final var patron = patronService.get(new PatronId(id));
@@ -61,6 +66,7 @@ public class PatronController {
         return ResponseEntity.ok(patronResponse);
     }
 
+    @Log
     @GetMapping
     public ResponseEntity<Page<PatronResponse>> getAllPatrons(Pageable pageable) {
         final var patrons = patronService.getAll(pageable);
