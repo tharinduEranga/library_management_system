@@ -144,12 +144,12 @@ class PatronControllerIT {
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/v1/patron/100")
                         .contentType(MediaType.APPLICATION_JSON)
                 )
-                .andExpect(status().isBadRequest())
+                .andExpect(status().isNotFound())
                 .andExpect(content().json("""
                             {
                                 "errors": [
                                     {
-                                        "code": "400 BAD_REQUEST",
+                                        "code": "404 NOT_FOUND",
                                         "message": "Patron doesn't exist for id: 100"
                                     }
                                 ]
@@ -179,12 +179,12 @@ class PatronControllerIT {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/patron/100")
                         .contentType(MediaType.APPLICATION_JSON)
                 )
-                .andExpect(status().isBadRequest())
+                .andExpect(status().isNotFound())
                 .andExpect(content().json("""
                             {
                                 "errors": [
                                     {
-                                        "code": "400 BAD_REQUEST",
+                                        "code": "404 NOT_FOUND",
                                         "message": "Patron doesn't exist for id: 100"
                                     }
                                 ]

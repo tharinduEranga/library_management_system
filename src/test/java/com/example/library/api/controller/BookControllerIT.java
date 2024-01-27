@@ -174,12 +174,12 @@ class BookControllerIT {
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/v1/book/100")
                         .contentType(MediaType.APPLICATION_JSON)
                 )
-                .andExpect(status().isBadRequest())
+                .andExpect(status().isNotFound())
                 .andExpect(content().json("""
                             {
                                 "errors": [
                                     {
-                                        "code": "400 BAD_REQUEST",
+                                        "code": "404 NOT_FOUND",
                                         "message": "Book doesn't exist for id: 100"
                                     }
                                 ]
@@ -212,12 +212,12 @@ class BookControllerIT {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/book/100")
                         .contentType(MediaType.APPLICATION_JSON)
                 )
-                .andExpect(status().isBadRequest())
+                .andExpect(status().isNotFound())
                 .andExpect(content().json("""
                             {
                                 "errors": [
                                     {
-                                        "code": "400 BAD_REQUEST",
+                                        "code": "404 NOT_FOUND",
                                         "message": "Book doesn't exist for id: 100"
                                     }
                                 ]

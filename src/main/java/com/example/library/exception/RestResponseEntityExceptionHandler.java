@@ -3,13 +3,13 @@ package com.example.library.exception;
 import com.example.library.api.response.error.Error;
 import com.example.library.api.response.error.ErrorResponse;
 import com.example.library.exception.custom.BusinessRuleViolationException;
+import com.example.library.exception.custom.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -33,12 +33,11 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
                 new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 
-    @ExceptionHandler(value = {ObjectOptimisticLockingFailureException.class})
-    protected ResponseEntity<Object> handleUnknown(ObjectOptimisticLockingFailureException ex, WebRequest request) {
-        ex.printStackTrace();
+    @ExceptionHandler(value = {NotFoundException.class})
+    protected ResponseEntity<Object> handleNotFoundException(NotFoundException ex, WebRequest request) {
         return handleExceptionInternal(ex,
-                getErrorResponse(HttpStatus.CONFLICT.toString(), "Concurrent transaction, please try again!"),
-                new HttpHeaders(), HttpStatus.CONFLICT, request);
+                getErrorResponse(HttpStatus.NOT_FOUND.toString(), ex.getMessage()),
+                new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
 
     @ExceptionHandler(value = {Exception.class})
