@@ -28,7 +28,7 @@ public class RequestResponseLoggingAspect {
     private void logResponse(final ResponseEntity<?> responseEntity) {
         if (responseEntity.getBody() instanceof PageImpl<?>) {
             // Convert the collection to a JSON string or any other log-friendly format
-            String responseBodyJson = convertCollectionToJson((PageImpl<?>) responseEntity.getBody());
+            final var responseBodyJson = convertCollectionToJson((PageImpl<?>) responseEntity.getBody());
             logger.info("Response body: {}", responseBodyJson);
         } else {
             logger.info("Response body: {}", responseEntity.getBody());

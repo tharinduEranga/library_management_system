@@ -6,6 +6,7 @@ import com.example.library.mapper.PatronMapper;
 import com.example.library.model.Patron;
 import com.example.library.model.value.PatronId;
 import com.example.library.repository.dao.PatronRepository;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -44,6 +45,7 @@ public class PatronService {
         patronRepository.deleteById(patronId.value());
     }
 
+    @Cacheable(cacheNames = "patron", key = "#patronId.value()")
     @Transactional(readOnly = true)
     public Patron get(final PatronId patronId) {
         return patronRepository.findById(patronId.value())
@@ -51,6 +53,7 @@ public class PatronService {
                 .orElseThrow(() -> new NotFoundException("Patron doesn't exist for id: " + patronId.value()));
     }
 
+    @Cacheable(cacheNames = "patron")
     @Transactional(readOnly = true)
     public Page<Patron> getAll(Pageable pageable) {
         return patronRepository.findAll(pageable)

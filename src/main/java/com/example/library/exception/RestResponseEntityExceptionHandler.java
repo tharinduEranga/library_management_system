@@ -20,14 +20,14 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-
 @ControllerAdvice
 public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(RestResponseEntityExceptionHandler.class);
+    private static final Logger log = LoggerFactory.getLogger(RestResponseEntityExceptionHandler.class);
 
     @ExceptionHandler(value = {BusinessRuleViolationException.class})
     protected ResponseEntity<Object> handleBusinessException(BusinessRuleViolationException ex, WebRequest request) {
+        log.error("[RestResponseEntityExceptionHandler] handleBusinessException", ex);
         return handleExceptionInternal(ex,
                 getErrorResponse(HttpStatus.BAD_REQUEST.toString(), ex.getMessage()),
                 new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
@@ -35,6 +35,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 
     @ExceptionHandler(value = {NotFoundException.class})
     protected ResponseEntity<Object> handleNotFoundException(NotFoundException ex, WebRequest request) {
+        log.error("[RestResponseEntityExceptionHandler] handleNotFoundException", ex);
         return handleExceptionInternal(ex,
                 getErrorResponse(HttpStatus.NOT_FOUND.toString(), ex.getMessage()),
                 new HttpHeaders(), HttpStatus.NOT_FOUND, request);
@@ -50,9 +51,8 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 
     @ExceptionHandler(value = RuntimeException.class)
     protected ResponseEntity<Object> handleRunTimeException(RuntimeException ex, WebRequest request) {
-        LOGGER.error("[RestResponseEntityExceptionHandler] handleRunTimeException", ex);
-
-        var errorResponse = getErrorResponse(HttpStatus.BAD_REQUEST.toString(),
+        log.error("[RestResponseEntityExceptionHandler] handleRunTimeException", ex);
+        final var errorResponse = getErrorResponse(HttpStatus.BAD_REQUEST.toString(),
                 Objects.nonNull(ex.getCause()) ? ex.getCause().getMessage() : ex.getMessage());
         return handleExceptionInternal(ex, errorResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
@@ -61,19 +61,18 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers,
                                                                   HttpStatusCode status, WebRequest request) {
 
-        LOGGER.error("[RestResponseEntityExceptionHandler] handleMethodArgumentNotValid", ex);
-        List<Error> errorList = ex.getFieldErrors()
+        log.error("[RestResponseEntityExceptionHandler] handleMethodArgumentNotValid", ex);
+        final var errorList = ex.getFieldErrors()
                 .stream()
                 .map(f -> f.getField() + ": " + f.getDefaultMessage())
                 .map(errorMessage -> getError(HttpStatus.BAD_REQUEST.toString(), errorMessage))
                 .toList();
-
         return handleExceptionInternal(ex, getErrorResponse(errorList), new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 
 
     private ErrorResponse getErrorResponse(String code, String message) {
-        var error = getError(code, message);
+        final var error = getError(code, message);
         return new ErrorResponse().errors(Collections.singletonList(error));
     }
 

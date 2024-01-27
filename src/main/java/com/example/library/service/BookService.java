@@ -6,6 +6,7 @@ import com.example.library.mapper.BookMapper;
 import com.example.library.model.Book;
 import com.example.library.model.value.BookId;
 import com.example.library.repository.dao.BookRepository;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -43,6 +44,7 @@ public class BookService {
         bookRepository.deleteById(bookId.value());
     }
 
+    @Cacheable(cacheNames = "book", key = "#bookId.value()")
     @Transactional(readOnly = true)
     public Book get(final BookId bookId) {
         return bookRepository.findById(bookId.value())
@@ -50,6 +52,7 @@ public class BookService {
                 .orElseThrow(() -> new NotFoundException("Book doesn't exist for id: " + bookId.value()));
     }
 
+    @Cacheable(cacheNames = "book")
     @Transactional(readOnly = true)
     public Page<Book> getAll(Pageable pageable) {
         return bookRepository.findAll(pageable)
