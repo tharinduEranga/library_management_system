@@ -1,26 +1,20 @@
 package com.example.library.api.controller;
 
+import com.example.library.api.controller.base.BaseIT;
 import com.example.library.repository.dao.BookRepository;
 import com.example.library.repository.entity.BookData;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@AutoConfigureMockMvc
-class BookControllerIT {
 
-    @Autowired
-    private MockMvc mockMvc;
+class BookControllerIT extends BaseIT {
 
     @Autowired
     private BookRepository bookRepository;
@@ -30,6 +24,7 @@ class BookControllerIT {
     void addBookSuccess() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/book")
                         .contentType(MediaType.APPLICATION_JSON)
+                        .headers(getAuthentication())
                         .content("""
                                 {
                                     "title": "The Catcher in the Rye",
